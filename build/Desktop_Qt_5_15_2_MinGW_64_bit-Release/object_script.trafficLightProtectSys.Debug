@@ -1,0 +1,15 @@
+debug/main.o
+debug/mainclass.o
+debug/myhttpserver.o
+debug/mytcpclient.o
+debug/qaesencryption.o
+debug/rule.o
+debug/screen.o
+debug/trafficlight.o
+debug/moc_mainclass.o
+debug/moc_myhttpserver.o
+debug/moc_mytcpclient.o
+debug/moc_qaesencryption.o
+debug/moc_rule.o
+debug/moc_screen.o
+debug/moc_trafficlight.o
