@@ -1,0 +1,28 @@
+<RCC>
+    <qresource prefix="/">
+        <file>src/trafficLight/circle/green.png</file>
+        <file>src/trafficLight/circle/red.png</file>
+        <file>src/trafficLight/circle/yellow.png</file>
+        <file>src/trafficLight/arrows/forward/green.png</file>
+        <file>src/trafficLight/arrows/forward/red.png</file>
+        <file>src/trafficLight/arrows/forward/yellow.png</file>
+        <file>src/trafficLight/arrows/left/green.png</file>
+        <file>src/trafficLight/arrows/left/red.png</file>
+        <file>src/trafficLight/arrows/left/yellow.png</file>
+        <file>src/trafficLight/arrows/right/green.png</file>
+        <file>src/trafficLight/arrows/right/red.png</file>
+        <file>src/trafficLight/arrows/right/yellow.png</file>
+        <file>src/trafficLight/arrows/back/green.png</file>
+        <file>src/trafficLight/arrows/back/red.png</file>
+        <file>src/trafficLight/arrows/back/yellow.png</file>
+        <file>src/trafficLight/unknown/green.png</file>
+        <file>src/trafficLight/unknown/red.png</file>
+        <file>src/trafficLight/unknown/yellow.png</file>
+        <file>src/trafficLight/circle/black.png</file>
+        <file>src/trafficLight/unknown/black.png</file>
+        <file>src/trafficLight/arrows/back/black.png</file>
+        <file>src/trafficLight/arrows/forward/black.png</file>
+        <file>src/trafficLight/arrows/left/black.png</file>
+        <file>src/trafficLight/arrows/right/black.png</file>
+    </qresource>
+</RCC>

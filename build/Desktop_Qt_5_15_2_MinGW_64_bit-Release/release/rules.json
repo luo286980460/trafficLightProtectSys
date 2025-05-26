@@ -1,0 +1,70 @@
+{
+    "rules": [
+        {
+            "conditionList": [
+                {
+                    "args": [
+                        "",
+                        ""
+                    ],
+                    "condition": 0,
+                    "deviceId": 1,
+                    "deviceType": 0
+                },
+                {
+                    "args": [
+                        "2",
+                        ""
+                    ],
+                    "condition": 4,
+                    "deviceId": 1,
+                    "deviceType": 0
+                }
+            ],
+            "executeTaskList": [
+                {
+                    "args": [
+                        "��ȫ��ʻ",
+                        ""
+                    ],
+                    "deviceId": 1,
+                    "deviceType": 1,
+                    "executeTask": 0
+                },
+                {
+                    "args": [
+                        "��ȫ��ʻ",
+                        ""
+                    ],
+                    "deviceId": 1,
+                    "deviceType": 1,
+                    "executeTask": 1
+                }
+            ],
+            "name": "规则111"
+        },
+        {
+            "conditionList": [
+                {
+                    "args": [
+                        ""
+                    ],
+                    "condition": 0,
+                    "deviceId": 1,
+                    "deviceType": 0
+                }
+            ],
+            "executeTaskList": [
+                {
+                    "args": [
+                        "��ȫ��ʻ"
+                    ],
+                    "deviceId": 1,
+                    "deviceType": 1,
+                    "executeTask": 0
+                }
+            ],
+            "name": "����2222222222222"
+        }
+    ]
+}
