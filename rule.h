@@ -6,6 +6,8 @@
 #include <QObject>
 #include <QTimer>
 
+class Screen;
+
 enum class e_deviceType{    // 设备类型
     LIGHT,
     SCREEN
@@ -45,10 +47,11 @@ public:
 private:
     void initTimer();
     void initRules();   // 加载本地规则
+    void initScreen();
     void writewRules2RulesFile(QString rulesData);   // 写入规则到文件
     bool conittionIsTrue(s_condition condition);      // 条件为真
     bool allConitionIsTrue(QList<s_condition>* conditionList);
-    bool executeTaskIsDone(s_executeTask condition);      // 执行结果为真
+    bool executeTaskIsDone(s_executeTask executeTask);      // 执行结果为真
     bool allexecuteTaskIsDone(QList<s_executeTask>* executeTaskList);
     bool modifyLightColorById(int id, e_trafficLightColor color);
     e_trafficLightColor colorString2Enum(QString color);
@@ -73,6 +76,7 @@ private:
     QList<TrafficLight*> m_trafficLightList;
     QList<Screen*> m_screenList;
     QByteArray m_localRulesData;
+    Screen* m_screen;
 };
 
 #endif // RULE_H

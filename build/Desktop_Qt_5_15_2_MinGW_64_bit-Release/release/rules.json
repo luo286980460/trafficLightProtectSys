@@ -1,41 +1,27 @@
-
 {
     "rules": [
         {
-            "name":"规则1",
-            "conditionList":[
-				{
-					"deviceType":0,
-					"deviceId":1,
-					"condition":0,
-					"args":["",""]	
-
-				},
-				{
-					"deviceType":0,
-					"deviceId":1,
-					"condition":4,
-					"args":["2",""]
-
-				}
+            "conditionList": [
+                {
+                    "args": [
+                        "1"
+                    ],
+                    "condition": 0,
+                    "deviceId": 1,
+                    "deviceType": 0
+                }
             ],
-            "executeTaskList":[    
-				{
-					"deviceType":1,
-					"deviceId":1,
-					"executeTask":0,
-					"args":["安全驾驶",""]
-
-				},
-				{
-					"deviceType":1,
-					"deviceId":1,
-					"executeTask":1,
-					"args":["安全驾驶",""]
-				}
-            ]
+            "executeTaskList": [
+                {
+                    "args": [
+                        "安全驾驶"
+                    ],
+                    "deviceId": 1,
+                    "deviceType": 1,
+                    "executeTask": 0
+                }
+            ],
+            "name": "规则1"
         }
     ]
 }
-
-

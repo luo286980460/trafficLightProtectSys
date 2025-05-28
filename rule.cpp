@@ -14,6 +14,7 @@ Rule::Rule(QObject *parent)
 {
     initRules();
     initTimer();
+    initScreen();
 }
 
 void Rule::runRule()
@@ -82,6 +83,12 @@ void Rule::initRules()
     setRules(QString::fromUtf8(m_localRulesData));
 }
 
+void Rule::initScreen()
+{
+    m_screen = new Screen;
+    m_screenList << m_screen;
+}
+
 void Rule::writewRules2RulesFile(QString rulesData)
 {
     // CFG_JSON配置文件是否存在
@@ -129,8 +136,22 @@ bool Rule::allConitionIsTrue(QList<s_condition>* conditionList)
     return true;
 }
 
-bool Rule::executeTaskIsDone(s_executeTask condition)
+bool Rule::executeTaskIsDone(s_executeTask executeTask)
 {
+    switch (executeTask.deviceType) {
+    case e_deviceType::LIGHT:
+        qDebug() << "灯执行任务暂未启用";
+        return false;
+        break;
+    case e_deviceType::SCREEN:
+        if(!getScreen(executeTask.deviceId)->executeTaskIsDone((e_screenExecuteTask)(executeTask.executeTask), executeTask.args)){
+            return false;
+        }
+        break;
+    default:
+        break;
+    }
+
     return true;
 }
 
@@ -229,7 +250,7 @@ void Rule::setRules(QString ruleData)
             rule->conditionList << condition;
         }
 
-        QJsonArray executeArray = ruleJson.value("executeTasks").toArray();
+        QJsonArray executeArray = ruleJson.value("executeTaskList").toArray();
         foreach (QJsonValue executeTaskValue, executeArray){
             QJsonObject executeTaskJson = executeTaskValue.toObject();
             s_executeTask executeTask;
