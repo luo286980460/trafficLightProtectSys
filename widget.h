@@ -13,7 +13,6 @@ class TriggeringCondition;
 class MyUdpServer;
 class MyWidget;
 class runRules;
-class Screen;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -97,9 +96,6 @@ private:
     void initRunRules();
     s_rule m_currentRule;
 
-    // 屏幕
-    Screen* m_screen;
-    void initScreen();
 
 };
 #endif // WIDGET_H

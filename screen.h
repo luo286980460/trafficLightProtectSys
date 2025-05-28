@@ -18,15 +18,15 @@ class Screen : public QObject
 {
     Q_OBJECT
 public:
-    explicit Screen(QString ip, int port, QObject *parent = nullptr);
-    void post(QString jsonData);
+    explicit Screen(QObject *parent = nullptr);
+    void post(QString url, QString jsonData);
 
-    void executeAllTasks(QList<e_screenExecuteTask> *e_executeTaskList);
+    bool executeTaskIsDone(e_screenExecuteTask executeTask, QStringList args);      // 执行结果为真
 
 private:
     void init();
 
-    void executeTask0();
+    void executeTask0(QString content);
     void executeTask1();
     void executeTask2();
     void executeTask3();
@@ -37,11 +37,11 @@ signals:
     void showMsg(QString msg);
 
 public slots:
-    void tmpScreenExecuteTasks(QStringList taskList);   // 临时方法,屏幕执行任务
 
 private:
     QNetworkAccessManager* m_manager;
-    QString m_url;
+    QString m_ip;
+    int m_port;
 };
 
 #endif // SCREEN_H

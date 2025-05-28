@@ -11,7 +11,6 @@
 #include <QJsonDocument>
 #include <QGroupBox>
 #include <QDebug>
-#include <Screen.h>
 
 #define CFG_NAME "/cfg.json";
 
@@ -20,7 +19,6 @@ Widget::Widget(QWidget *parent)
     , ui(new Ui::Widget)
 {
     ui->setupUi(this);
-    initMyHttpserver();
     ui->propertyGroupBox->hide();
     ui->ConditionGroupBox->hide();
     ui->conditionShowWidget->setReadOnly(true);
@@ -30,14 +28,12 @@ Widget::Widget(QWidget *parent)
 
     initCfg();
 
+    initMyHttpserver();
     initUdpServer();
     initRunRules();
     updateRulesList();
 
     connect(m_myHttpserver, &MyHttpServer::signalUpdateRulesInfo, m_runRules, &runRules::slotUpdateRulesInfo);
-
-    initScreen();
-    connect(this, &Widget::tmpScreenExecuteTasks, m_screen, &Screen::tmpScreenExecuteTasks);
 }
 
 Widget::~Widget()
@@ -68,7 +64,7 @@ void Widget::initCfg()
 
 void Widget::initMyHttpserver()
 {
-    m_myHttpserver = new MyHttpServer(23334, this);
+    m_myHttpserver = new MyHttpServer(m_cfgJson.value("httpServerPort").toInt(), this);
     connect(m_myHttpserver, &MyHttpServer::showMsg, this, &Widget::showMsg);
     connect(m_myHttpserver, &MyHttpServer::signalUpdateLightsInfoDataParse, this, &Widget::slotUpdateLightsInfoDataParse);
     m_myHttpserver->setTrafficLightListPtr(&m_trafficLightList);
@@ -275,16 +271,6 @@ void Widget::initRunRules()
     connect(m_runRules, &runRules::showMsg, this, &Widget::showMsg);
     m_runRules->setTrafficLightList(&m_trafficLightList);
 }
-
-void Widget::initScreen()
-{
-    QString ip = m_cfgJson.value("screen").toObject().value("ip").toString();
-    int port = m_cfgJson.value("screen").toObject().value("port").toInt();
-    m_screen = new Screen(ip, port);
-    connect(m_screen, &Screen::showMsg, this, &Widget::showMsg);
-
-}
-
 
 void Widget::on_propertyGroupBoxCloseBtn_clicked()
 {

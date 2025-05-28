@@ -366,17 +366,17 @@ void MyHttpServer::createHttpserver(int port)
     m_router->GET("/ping", [](HttpRequest* req, HttpResponse* resp) {
         Q_UNUSED(req);
         Json ex3 =  {
-            {"time", "最后更新时间：2025年05月12日"},
+            {"time", "最后更新时间：2025年05月28日"},
             {"Name", "信号灯守护神系统UI"},
-            {"Version", "0.1"},
-            {"Msg", ""}
+            {"Version", "0.2"},
+            {"Msg", "添加屏幕任务模块"}
         };
 
         QJsonObject backJson;
-        backJson.insert("time", "最后更新时间：2025年05月12日");
+        backJson.insert("time", "最后更新时间：2025年05月28日");
         backJson.insert("Name", "信号灯守护神系统UI");
-        backJson.insert("Version", "0.1");
-        backJson.insert("Msg", "");
+        backJson.insert("Version", "0.2");
+        backJson.insert("Msg", "添加屏幕任务模块");
 
         resp->content_type = APPLICATION_JSON;
         resp->body = QJsonDocument(backJson).toJson().toStdString();

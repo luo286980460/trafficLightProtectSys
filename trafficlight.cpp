@@ -251,8 +251,6 @@ QString TrafficLight::getStytle()
 
 bool TrafficLight::CONDITTION0IsTrue(e_trafficLightColor color)
 {
-    qDebug() << "color: " << "    " << (int)color;
-    qDebug() << "m_color: " << "    " << (int)m_color;
     if(m_color == color){
         return true;
     }

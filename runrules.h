@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QTimer>
 
+class Screen;
 
 enum class e_deviceType{    // 设备类型
     LIGHT,
@@ -37,21 +38,17 @@ public:
     explicit runRules(QObject *parent = nullptr);
 
 
-    void runRule();
-    void initRules();   // 加载本地规则
     void writewRules2RulesFile(QString rulesData);   // 写入规则到文件
     TrafficLight* getLight(int deviceId);
-    bool conittionIsTrue(s_condition condition);      // 条件为真
+    Screen* getScreen(int deviceId);
+    bool conditionIsTrue(s_condition condition);      // 条件为真
     bool allConitionIsTrue(QList<s_condition>* conditionList);
     bool executeTaskIsDone(s_executeTask condition);      // 执行结果为真
     bool allexecuteTaskIsDone(QList<s_executeTask>* executeTaskList);
 
-    void test();
     s_rule* at(int index);
     int count();
 
-    QString e_condition2String(e_condition condition);
-    QString e_executeTask2String(e_lightExecuteTask executeTask);
     void setTrafficLightList(QList<TrafficLight*>* trafficLightList);
 
     void setRules(QString ruleData);
@@ -59,8 +56,11 @@ public:
     QStringList getRulesList();
 
 private:
+    void runRule();
+    void initRules();   // 加载本地规则
     void initTimer();
     void packRulesData();
+    void initScreen();
 
 signals:
     void showMsg(QString msg);
@@ -75,6 +75,7 @@ private:
     QString m_rulesData;
     QList<TrafficLight*>* m_trafficLightList;
     QByteArray m_localRulesData;
+    Screen* m_screen;
 };
 
 #endif // RUNRULES_H
