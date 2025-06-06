@@ -1,4 +1,6 @@
 ﻿#include "rule.h"
+#include "datatransmitter.h"
+#include "novacontroller.h"
 #include "qjsonarray.h"
 #include "qjsondocument.h"
 #include "qjsonobject.h"
@@ -8,6 +10,7 @@
 #include <QFile>
 
 #define RULES_JSON  "/rules.json"
+#define CFG_NAME "/cfg.json"
 
 Rule::Rule(QObject *parent)
     : QObject{parent}
@@ -22,12 +25,14 @@ void Rule::runRule()
     for(int i=0; i<m_ruleList.count(); i++){
         if(allConitionIsTrue(&(m_ruleList.at(i)->conditionList))){
             allexecuteTaskIsDone(&(m_ruleList.at(i)->executeTaskList));
-            qDebug() << m_ruleList.at(i)->name << ":    所有条件为真";
+            qDebug() << m_ruleList.at(i)->name << ":    true";
+            //qDebug() << m_ruleList.at(i)->name << ":    所有条件为真";
         }else{
-
-           qDebug() << m_ruleList.at(i)->name << ":    有条件为假";
+            qDebug() << m_ruleList.at(i)->name << ":    false";
+           //qDebug() << m_ruleList.at(i)->name << ":    有条件为假";
         }
     }
+    qDebug() <<"\n *********************** \n";
 }
 
 void Rule::testShowLights()
@@ -85,8 +90,31 @@ void Rule::initRules()
 
 void Rule::initScreen()
 {
-    m_screen = new Screen;
+    QString cfgPath = QCoreApplication::applicationDirPath() + CFG_NAME;
+    QFile file(cfgPath);
+
+    if(!file.exists()){
+        qDebug() <<("配置文件不存在");
+    }
+
+    if(!file.open(QIODevice::ReadOnly)){
+        qDebug() <<("配置文件读取失败");
+    }
+
+    QString ip;
+    int Back2DefaultProgram;
+    QJsonObject cfgJson = QJsonDocument::fromJson(file.readAll()).object();
+
+    ip = cfgJson.value("screen").toObject().value("ip").toString();
+    Back2DefaultProgram = cfgJson.value("screen").toObject().value("Back2DefaultProgram").toInt();
+    m_screen = new NovaController(ip, Back2DefaultProgram);
     m_screenList << m_screen;
+    m_screen->start();
+}
+
+void Rule::initDataTransmitter()
+{
+    m_dataTransmitter = new DataTransmitter;
 }
 
 void Rule::writewRules2RulesFile(QString rulesData)
@@ -117,7 +145,12 @@ bool Rule::conittionIsTrue(s_condition condition)
         }
         break;
     case e_deviceType::SCREEN:
-
+        qCritical() << "****** 屏幕未添加条件判断 ******";
+        return false;
+        break;
+    case e_deviceType::DATA_TRANSMITTER:
+        qCritical() << "****** 屏幕数据发送未添加条件判断 ******";
+        return false;
         break;
     default:
         break;
@@ -145,6 +178,11 @@ bool Rule::executeTaskIsDone(s_executeTask executeTask)
         break;
     case e_deviceType::SCREEN:
         if(!getScreen(executeTask.deviceId)->executeTaskIsDone((e_screenExecuteTask)(executeTask.executeTask), executeTask.args)){
+            return false;
+        }
+        break;
+    case e_deviceType::DATA_TRANSMITTER:
+        if(!getDataTransmitter(executeTask.deviceId)->executeTaskIsDone((e_dataTransmitterExecuteTask)(executeTask.executeTask), executeTask.args)){
             return false;
         }
         break;
@@ -290,13 +328,19 @@ TrafficLight *Rule::getLight(int deviceId)
     return nullptr;
 }
 
-Screen *Rule::getScreen(int deviceId)
+NovaController *Rule::getScreen(int deviceId)
 {
     for(int i=0; i<m_screenList.count(); i++){
         if(m_screenList.at(i)->getId() == deviceId){
             return m_screenList.at(i);
         }
     }
+    return nullptr;
+}
+
+DataTransmitter *Rule::getDataTransmitter(int deviceId)
+{
+    if(m_dataTransmitter) return m_dataTransmitter;
     return nullptr;
 }
 void Rule::slotUpdateLightsInfoDataParse(QString data)
@@ -316,7 +360,7 @@ void Rule::slotUpdateLightsInfoDataParse(QString data)
         }
     }
 
-    testShowLights();
+    // testShowLights();
 }
 
 void Rule::slotUpdateRulesInfo(QString ruleData)

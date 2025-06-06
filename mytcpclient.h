@@ -1,4 +1,4 @@
-#ifndef MYTCPCLIENT_H
+﻿#ifndef MYTCPCLIENT_H
 #define MYTCPCLIENT_H
 
 #include <QObject>
@@ -12,7 +12,6 @@ public:
     void connectToHost(QString ip, int port);
 
 signals:
-    void showMsg(QString msg);
     void signalUpdateLightsInfoDataParse(QString data);
 
 

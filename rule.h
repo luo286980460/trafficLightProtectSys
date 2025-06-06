@@ -1,16 +1,17 @@
 ﻿#ifndef RULE_H
 #define RULE_H
 
-#include "screen.h"
 #include "trafficlight.h"
 #include <QObject>
 #include <QTimer>
 
-class Screen;
+class NovaController;
+class DataTransmitter;
 
 enum class e_deviceType{    // 设备类型
-    LIGHT,
-    SCREEN
+    LIGHT,              // 灯
+    SCREEN,             // 屏
+    DATA_TRANSMITTER    // 数据发送
 };
 
 typedef struct {        // 条件结构体
@@ -48,6 +49,7 @@ private:
     void initTimer();
     void initRules();   // 加载本地规则
     void initScreen();
+    void initDataTransmitter();
     void writewRules2RulesFile(QString rulesData);   // 写入规则到文件
     bool conittionIsTrue(s_condition condition);      // 条件为真
     bool allConitionIsTrue(QList<s_condition>* conditionList);
@@ -62,7 +64,8 @@ private:
     void clearRules();
 
     TrafficLight* getLight(int deviceId);
-    Screen* getScreen(int deviceId);
+    NovaController* getScreen(int deviceId);
+    DataTransmitter* getDataTransmitter(int deviceId);
 
 signals:
 
@@ -74,9 +77,10 @@ private:
     QTimer* m_runRulesTimer;
     QList<s_rule*> m_ruleList;
     QList<TrafficLight*> m_trafficLightList;
-    QList<Screen*> m_screenList;
+    QList<NovaController*> m_screenList;
     QByteArray m_localRulesData;
-    Screen* m_screen;
+    NovaController* m_screen;
+    DataTransmitter* m_dataTransmitter;
 };
 
 #endif // RULE_H

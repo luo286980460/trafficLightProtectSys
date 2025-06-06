@@ -29,6 +29,7 @@ signals:
 
 public slots:
 
+
 private:
     QJsonObject m_cfgJson;
     MyHttpServer* m_myHttpServer;

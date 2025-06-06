@@ -147,7 +147,6 @@ void MyHttpServer::createHttpserver(int port)
             return 200;
         }
 
-        bool isOk = false;
 
         //qDebug() << QJsonDocument::fromJson(decrypt_Aes128_ECB_PKCS7_HEX(QByteArray::fromHex(accountInfoFile.readAll()), m_aesKey).trimmed());
 
@@ -361,17 +360,17 @@ void MyHttpServer::createHttpserver(int port)
     m_router->GET("/ping", [](HttpRequest* req, HttpResponse* resp) {
         Q_UNUSED(req);
         Json ex3 =  {
-            {"time", "最后更新时间：2025年05月28日"},
+            {"time", "最后更新时间：2025年06月06日"},
             {"Name", "信号灯守护神系统UI"},
-            {"Version", "0.2"},
-            {"Msg", "添加屏幕任务模块"}
+            {"Version", "0.3"},
+            {"Msg", "实现屏幕任务0(发送图片节目)对应的具体操作,已通过测试"}
         };
 
         QJsonObject backJson;
-        backJson.insert("time", "最后更新时间：2025年05月28日");
+        backJson.insert("time", "最后更新时间：2025年06月06日");
         backJson.insert("Name", "信号灯守护神系统(cmd)");
-        backJson.insert("Version", "0.2");
-        backJson.insert("Msg", "添加屏幕任务模块");
+        backJson.insert("Version", "0.3");
+        backJson.insert("Msg", "实现屏幕任务0(发送图片节目)对应的具体操作,已通过测试");
 
         resp->content_type = APPLICATION_JSON;
         resp->body = QJsonDocument(backJson).toJson().toStdString();

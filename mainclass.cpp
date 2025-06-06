@@ -1,6 +1,7 @@
 ﻿#include "mainclass.h"
 #include "myhttpserver.h"
 #include "mytcpclient.h"
+#include "qjsonarray.h"
 #include "rule.h"
 #include <QCoreApplication>
 #include <QFileInfo>
@@ -73,7 +74,9 @@ bool MainClass::initHttpserver()
 bool MainClass::initTcpClient()
 {
     m_myTcpclient = new MyTcpClient();
-    m_myTcpclient->connectToHost("127.0.0.1", 23333);
+    connect(m_myTcpclient, &MyTcpClient::signalUpdateLightsInfoDataParse, this, &MainClass::signalUpdateLightsInfoDataParse);
+    m_myTcpclient->connectToHost(m_cfgJson.value("camera").toObject().value("ip").toString(),
+                                 m_cfgJson.value("camera").toObject().value("port").toInt());
     return true;
 }
 
@@ -84,4 +87,3 @@ bool MainClass::initRule()
     connect(this, &MainClass::signalUpdateRulesInfo, m_rule, &Rule::slotUpdateRulesInfo);
     return true;
 }
-

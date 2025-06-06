@@ -13,25 +13,25 @@ MyTcpClient::MyTcpClient(QObject *parent)
     connect(m_tcpSocket, &QTcpSocket::stateChanged, this, [this](QAbstractSocket::SocketState state){
         switch (state) {
         case QAbstractSocket::UnconnectedState:
-            emit showMsg("UnconnectedState");
+            qDebug() << ("UnconnectedState");
             break;
         case QAbstractSocket::HostLookupState:
-            emit showMsg("HostLookupState");
+            qDebug() << ("HostLookupState");
             break;
         case QAbstractSocket::ConnectingState:
-            emit showMsg("ConnectingState");
+            qDebug() << ("ConnectingState");
             break;
         case QAbstractSocket::ConnectedState:
-            emit showMsg("ConnectedState");
+            qDebug() << ("ConnectedState");
             break;
         case QAbstractSocket::BoundState:
-            emit showMsg("BoundState");
+            qDebug() << ("BoundState");
             break;
         case QAbstractSocket::ListeningState:
-            emit showMsg("ListeningState");
+            qDebug() << ("ListeningState");
             break;
         case QAbstractSocket::ClosingState:
-            emit showMsg("ClosingState");
+            qDebug() << ("ClosingState");
             break;
         default:
             break;

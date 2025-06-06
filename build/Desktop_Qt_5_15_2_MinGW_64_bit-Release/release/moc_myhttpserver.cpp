@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MyHttpServer_t {
-    QByteArrayData data[9];
-    char stringdata0[119];
+    QByteArrayData data[7];
+    char stringdata0[107];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -35,17 +35,15 @@ static const qt_meta_stringdata_MyHttpServer_t qt_meta_stringdata_MyHttpServer =
 QT_MOC_LITERAL(0, 0, 12), // "MyHttpServer"
 QT_MOC_LITERAL(1, 13, 24), // "signalRestartApplication"
 QT_MOC_LITERAL(2, 38, 0), // ""
-QT_MOC_LITERAL(3, 39, 7), // "showMsg"
-QT_MOC_LITERAL(4, 47, 3), // "msg"
-QT_MOC_LITERAL(5, 51, 31), // "signalUpdateLightsInfoDataParse"
-QT_MOC_LITERAL(6, 83, 4), // "data"
-QT_MOC_LITERAL(7, 88, 21), // "signalUpdateRulesInfo"
-QT_MOC_LITERAL(8, 110, 8) // "ruleData"
+QT_MOC_LITERAL(3, 39, 31), // "signalUpdateLightsInfoDataParse"
+QT_MOC_LITERAL(4, 71, 4), // "data"
+QT_MOC_LITERAL(5, 76, 21), // "signalUpdateRulesInfo"
+QT_MOC_LITERAL(6, 98, 8) // "ruleData"
 
     },
     "MyHttpServer\0signalRestartApplication\0"
-    "\0showMsg\0msg\0signalUpdateLightsInfoDataParse\0"
-    "data\0signalUpdateRulesInfo\0ruleData"
+    "\0signalUpdateLightsInfoDataParse\0data\0"
+    "signalUpdateRulesInfo\0ruleData"
 };
 #undef QT_MOC_LITERAL
 
@@ -55,24 +53,22 @@ static const uint qt_meta_data_MyHttpServer[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       4,   14, // methods
+       3,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       4,       // signalCount
+       3,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   34,    2, 0x06 /* Public */,
-       3,    1,   35,    2, 0x06 /* Public */,
-       5,    1,   38,    2, 0x06 /* Public */,
-       7,    1,   41,    2, 0x06 /* Public */,
+       1,    0,   29,    2, 0x06 /* Public */,
+       3,    1,   30,    2, 0x06 /* Public */,
+       5,    1,   33,    2, 0x06 /* Public */,
 
  // signals: parameters
     QMetaType::Void,
     QMetaType::Void, QMetaType::QString,    4,
     QMetaType::Void, QMetaType::QString,    6,
-    QMetaType::Void, QMetaType::QString,    8,
 
        0        // eod
 };
@@ -84,9 +80,8 @@ void MyHttpServer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->signalRestartApplication(); break;
-        case 1: _t->showMsg((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 2: _t->signalUpdateLightsInfoDataParse((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 3: _t->signalUpdateRulesInfo((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 1: _t->signalUpdateLightsInfoDataParse((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 2: _t->signalUpdateRulesInfo((*reinterpret_cast< QString(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -100,22 +95,15 @@ void MyHttpServer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         }
         {
             using _t = void (MyHttpServer::*)(QString );
-            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&MyHttpServer::showMsg)) {
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&MyHttpServer::signalUpdateLightsInfoDataParse)) {
                 *result = 1;
                 return;
             }
         }
         {
             using _t = void (MyHttpServer::*)(QString );
-            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&MyHttpServer::signalUpdateLightsInfoDataParse)) {
-                *result = 2;
-                return;
-            }
-        }
-        {
-            using _t = void (MyHttpServer::*)(QString );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&MyHttpServer::signalUpdateRulesInfo)) {
-                *result = 3;
+                *result = 2;
                 return;
             }
         }
@@ -151,13 +139,13 @@ int MyHttpServer::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 4)
+        if (_id < 3)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 4;
+        _id -= 3;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 4)
+        if (_id < 3)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 4;
+        _id -= 3;
     }
     return _id;
 }
@@ -169,24 +157,17 @@ void MyHttpServer::signalRestartApplication()
 }
 
 // SIGNAL 1
-void MyHttpServer::showMsg(QString _t1)
+void MyHttpServer::signalUpdateLightsInfoDataParse(QString _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
     QMetaObject::activate(this, &staticMetaObject, 1, _a);
 }
 
 // SIGNAL 2
-void MyHttpServer::signalUpdateLightsInfoDataParse(QString _t1)
-{
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
-    QMetaObject::activate(this, &staticMetaObject, 2, _a);
-}
-
-// SIGNAL 3
 void MyHttpServer::signalUpdateRulesInfo(QString _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
-    QMetaObject::activate(this, &staticMetaObject, 3, _a);
+    QMetaObject::activate(this, &staticMetaObject, 2, _a);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

@@ -33,7 +33,6 @@ private:
 
 signals:
     void signalRestartApplication();
-    void showMsg(QString msg);
     void signalUpdateLightsInfoDataParse(QString data);
     void signalUpdateRulesInfo(QString ruleData);
 
