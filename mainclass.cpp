@@ -20,9 +20,9 @@ MainClass::MainClass(QObject *parent)
 void MainClass::init()
 {
     if(!initCfgJson()) return;  // 先读取配置， 往下的函数会使用配置信息
-    if(!initHttpserver()) return;
     if(!initTcpClient()) return;
     if(!initRule()) return;
+    if(!initHttpserver()) return;
 }
 
 bool MainClass::initCfgJson()
@@ -68,6 +68,11 @@ bool MainClass::initHttpserver()
     m_myHttpServer = new MyHttpServer(port, this);
     connect(m_myHttpServer, &MyHttpServer::signalUpdateLightsInfoDataParse, this, &MainClass::signalUpdateLightsInfoDataParse);
     connect(m_myHttpServer, &MyHttpServer::signalUpdateRulesInfo, this, &MainClass::signalUpdateRulesInfo);
+
+    if(m_rule){
+        m_myHttpServer->setRulesJsonArayData(m_rule->getRulesJsonArayData());
+    }
+
     return true;
 }
 

@@ -18,6 +18,8 @@ public:
     ~MyHttpServer();
 
     void stop();
+    void initTestJsonRules();
+    void setRulesJsonArayData(QByteArray jsonData);
 
 private:
     void createHttpserver(int port);                // 开启httpserver
@@ -44,6 +46,7 @@ public:
 
 private:
     QByteArray m_aesKey = "Utis00000000LsCb";
+    QJsonObject m_rulesJson;
 };
 
 

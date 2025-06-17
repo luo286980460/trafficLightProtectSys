@@ -4,6 +4,7 @@
 #include "trafficlight.h"
 #include <QObject>
 #include <QTimer>
+#include <QJsonObject>
 
 class NovaController;
 class DataTransmitter;
@@ -44,6 +45,7 @@ public:
 
     void testShowLights();
     void testShowRules();
+    QByteArray getRulesJsonArayData();
 
 private:
     void initTimer();

@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MyHttpServer_t {
-    QByteArrayData data[7];
-    char stringdata0[107];
+    QByteArrayData data[9];
+    char stringdata0[139];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -38,12 +38,15 @@ QT_MOC_LITERAL(2, 38, 0), // ""
 QT_MOC_LITERAL(3, 39, 31), // "signalUpdateLightsInfoDataParse"
 QT_MOC_LITERAL(4, 71, 4), // "data"
 QT_MOC_LITERAL(5, 76, 21), // "signalUpdateRulesInfo"
-QT_MOC_LITERAL(6, 98, 8) // "ruleData"
+QT_MOC_LITERAL(6, 98, 8), // "ruleData"
+QT_MOC_LITERAL(7, 107, 19), // "slotupdateRulesJson"
+QT_MOC_LITERAL(8, 127, 11) // "rulesJsonBa"
 
     },
     "MyHttpServer\0signalRestartApplication\0"
     "\0signalUpdateLightsInfoDataParse\0data\0"
-    "signalUpdateRulesInfo\0ruleData"
+    "signalUpdateRulesInfo\0ruleData\0"
+    "slotupdateRulesJson\0rulesJsonBa"
 };
 #undef QT_MOC_LITERAL
 
@@ -53,7 +56,7 @@ static const uint qt_meta_data_MyHttpServer[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+       4,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -61,14 +64,20 @@ static const uint qt_meta_data_MyHttpServer[] = {
        3,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   29,    2, 0x06 /* Public */,
-       3,    1,   30,    2, 0x06 /* Public */,
-       5,    1,   33,    2, 0x06 /* Public */,
+       1,    0,   34,    2, 0x06 /* Public */,
+       3,    1,   35,    2, 0x06 /* Public */,
+       5,    1,   38,    2, 0x06 /* Public */,
+
+ // slots: name, argc, parameters, tag, flags
+       7,    1,   41,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
     QMetaType::Void, QMetaType::QString,    4,
     QMetaType::Void, QMetaType::QString,    6,
+
+ // slots: parameters
+    QMetaType::Void, QMetaType::QByteArray,    8,
 
        0        // eod
 };
@@ -82,6 +91,7 @@ void MyHttpServer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 0: _t->signalRestartApplication(); break;
         case 1: _t->signalUpdateLightsInfoDataParse((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 2: _t->signalUpdateRulesInfo((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 3: _t->slotupdateRulesJson((*reinterpret_cast< QByteArray(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -139,13 +149,13 @@ int MyHttpServer::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 3)
+        if (_id < 4)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 4;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 3)
+        if (_id < 4)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 3;
+        _id -= 4;
     }
     return _id;
 }

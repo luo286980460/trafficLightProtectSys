@@ -12,13 +12,14 @@
 #include "qaesencryption.h"
 
 #define LOGIN_PATH "/src/dist/index.html"
-#define SRC_PATH "/src"
+#define SRC_PATH "/src/dist"
 #define ACCOUNT_INFO_PATH "/aip.ls"
 
 
 MyHttpServer::MyHttpServer(int port, QObject *parent)
     : QObject(parent)
 {
+
     createHttpserver(port);
 }
 
@@ -266,18 +267,15 @@ void MyHttpServer::createHttpserver(int port)
 
     m_router->POST("/trafficLight/updateRulesInfo", [this](HttpRequest* req, HttpResponse* resp) {
         QJsonObject backJson;
-        backJson.insert("token", "");
         backJson.insert("code", 200);
         backJson.insert("msg", "ok");
 
         QString body = QString::fromStdString(req->body);
         QString contentType = QString::fromStdString(req->GetHeader("ConTent-Type")).trimmed().replace(" ", "");
 
-
-
         // qDebug() << "***";
 
-        if("application/json" != contentType){
+        if("application/json" != contentType.toLower()){
             backJson["code"] = 400;
             backJson["msg"] = "非法请求头";
 
@@ -294,7 +292,6 @@ void MyHttpServer::createHttpserver(int port)
         QJsonDocument jsonDoc = QJsonDocument::fromJson(QString::fromStdString(req->body).toUtf8());
         QJsonObject jsonObj = jsonDoc.object();
 
-
         if(!updateLightsInfoDataIsLegal(jsonObj)){
             backJson["code"] = 200;
             backJson["msg"] = "updateLightsInfo协议数据不合法";
@@ -305,6 +302,7 @@ void MyHttpServer::createHttpserver(int port)
         }
 
         emit signalUpdateRulesInfo(jsonDoc.toJson());
+        m_rulesJson = jsonObj;
 
         backJson["code"] = 200;
         backJson["msg"] = "success";
@@ -315,38 +313,11 @@ void MyHttpServer::createHttpserver(int port)
     });
 
     // web前端获取所有红绿灯选项接口
-    m_router->GET("/trafficLight/getAllLightOptions", [this](HttpRequest* req, HttpResponse* resp) {
+    m_router->GET("/trafficLight/getRulesInfo", [this](HttpRequest* req, HttpResponse* resp) {
 
-        QJsonObject backJson;
-
-
-        QJsonObject light1;
-        QJsonObject light2;
-        QJsonArray lightArray;
-
-        QJsonObject option0;
-        QJsonObject option1;
-        QJsonObject option2;
-        QJsonArray optionArray;
-        option0.insert("index", "0");
-        option1.insert("index", "1");
-        option2.insert("index", "2");
-        option0.insert("text", "灯为红色时");
-        option1.insert("text", "灯为绿色时");
-        option2.insert("text", "灯为黄色时");
-        optionArray << option0 << option1 << option2;
-
-        light1.insert("id", "1");
-        light2.insert("id", "2");
-        light1.insert("options", optionArray);
-        light2.insert("options", optionArray);
-
-
-        lightArray << light1 << light2;
-        backJson.insert("data", lightArray);
-
+        Q_UNUSED(req);
         resp->content_type = APPLICATION_JSON;
-        resp->body = QJsonDocument(backJson).toJson().toStdString();
+        resp->body = QJsonDocument(m_rulesJson).toJson().toStdString();
 
 
         // resp->body = aes128_ECB_PKCS7_HEX(QJsonDocument(backJson).toJson(), m_aesKey).toStdString();
@@ -360,17 +331,17 @@ void MyHttpServer::createHttpserver(int port)
     m_router->GET("/ping", [](HttpRequest* req, HttpResponse* resp) {
         Q_UNUSED(req);
         Json ex3 =  {
-            {"time", "最后更新时间：2025年06月06日"},
-            {"Name", "信号灯守护神系统UI"},
-            {"Version", "0.3"},
-            {"Msg", "实现屏幕任务0(发送图片节目)对应的具体操作,已通过测试"}
+            {"time", "最后更新时间：2025年06月17日"},
+            {"Name", "信号灯守护神系统(cmd)web"},
+            {"Version", "1.0.1"},
+            {"Msg", "web测试版,"}
         };
 
         QJsonObject backJson;
-        backJson.insert("time", "最后更新时间：2025年06月06日");
-        backJson.insert("Name", "信号灯守护神系统(cmd)");
-        backJson.insert("Version", "0.3");
-        backJson.insert("Msg", "实现屏幕任务0(发送图片节目)对应的具体操作,已通过测试");
+        backJson.insert("time", "最后更新时间：2025年06月17日");
+        backJson.insert("Name", "信号灯守护神系统(cmd)web");
+        backJson.insert("Version", "1.0.1");
+        backJson.insert("Msg", "web测试版(args[]数据结构已修改)");
 
         resp->content_type = APPLICATION_JSON;
         resp->body = QJsonDocument(backJson).toJson().toStdString();
@@ -482,11 +453,12 @@ QString MyHttpServer::qstr2Hex(QString instr)
 
 void MyHttpServer::add_file_handler(HttpServer &server, const QString &basepath, const QString &path)
 {
+    Q_UNUSED(server);
     QString filepath = basepath + "/" + path;
     QFileInfo fileInfo(filepath);
     if (fileInfo.isFile()) {
         m_router->GET(("/"+path).toStdString().c_str(), [filepath](HttpRequest* req, HttpResponse* resp) {
-
+            Q_UNUSED(req);
             return resp->File(filepath.toStdString().c_str());
         });
     }
@@ -519,6 +491,11 @@ QByteArray MyHttpServer::decrypt_Aes128_ECB_PKCS7_HEX(QByteArray plaintext, QByt
 
 bool MyHttpServer::updateLightsInfoDataIsLegal(QJsonObject &json)
 {
+    Q_UNUSED(json);
     return true;
 }
 
+void MyHttpServer::setRulesJsonArayData(QByteArray jsonData)
+{
+    m_rulesJson = QJsonDocument::fromJson(jsonData).object();
+}

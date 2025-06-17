@@ -54,6 +54,11 @@ void Rule::testShowRules()
     }
 }
 
+QByteArray Rule::getRulesJsonArayData()
+{
+    return m_localRulesData;
+}
+
 void Rule::initTimer()
 {
     m_runRulesTimer = new QTimer;
@@ -247,7 +252,10 @@ QString Rule::enum2ColorString(e_trafficLightColor color)
     case e_trafficLightColor::UNKNOWN:
         return "未知";
         break;
+    default:
+        break;
     }
+    return "未知";
 }
 
 void Rule::addLight2List(int id, e_trafficLightColor color)
@@ -283,7 +291,7 @@ void Rule::setRules(QString ruleData)
             condition.condition = conditionJson.value("condition").toInt();
 
             foreach (QJsonValue value, args) {
-                condition.args << value.toString();
+                condition.args << value.toObject().value("name").toString();
             }
             rule->conditionList << condition;
         }
@@ -299,12 +307,11 @@ void Rule::setRules(QString ruleData)
             executeTask.executeTask = executeTaskJson.value("condition").toInt();
 
             foreach (QJsonValue value, args) {
-                executeTask.args << value.toString();
+                executeTask.args << value.toObject().value("name").toString();
             }
             rule->executeTaskList << executeTask;
         }
     }
-
 }
 
 void Rule::clearRules()
@@ -320,6 +327,7 @@ void Rule::clearRules()
 
 TrafficLight *Rule::getLight(int deviceId)
 {
+    Q_UNUSED(deviceId);
     for(int i=0; i<m_trafficLightList.count(); i++){
         if(m_trafficLightList.at(i)->getId() == deviceId){
             return m_trafficLightList.at(i);
@@ -340,9 +348,11 @@ NovaController *Rule::getScreen(int deviceId)
 
 DataTransmitter *Rule::getDataTransmitter(int deviceId)
 {
+    Q_UNUSED(deviceId);
     if(m_dataTransmitter) return m_dataTransmitter;
     return nullptr;
 }
+
 void Rule::slotUpdateLightsInfoDataParse(QString data)
 {
     QJsonObject json = QJsonDocument::fromJson(data.toLatin1()).object();
@@ -366,5 +376,6 @@ void Rule::slotUpdateLightsInfoDataParse(QString data)
 void Rule::slotUpdateRulesInfo(QString ruleData)
 {
     setRules(ruleData);
+    writewRules2RulesFile(ruleData);
     testShowRules();
 }
