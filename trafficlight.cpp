@@ -33,9 +33,23 @@ void TrafficLight::setLightColor(e_trafficLightColor color)
 
 bool TrafficLight::conitionIsTrue(e_lightCondition condition, QStringList args)
 {
+    QString colorStr;
     switch (condition) {
     case e_lightCondition::CONDITTION0:
-        if(CONDITTION0IsTrue((e_trafficLightColor)args.at(0).toInt()))return true;
+
+        colorStr = args.at(0).trimmed();
+        e_trafficLightColor color;
+        if(colorStr == "红"){
+            color = e_trafficLightColor::RED;
+        }else if(colorStr == "绿"){
+            color = e_trafficLightColor::GREEN;
+        }else if(colorStr == "黄"){
+            color = e_trafficLightColor::YELLOW;
+        }else{
+            color = e_trafficLightColor::BLACK;
+        }
+
+        if(CONDITTION0IsTrue(color))return true;
         break;
     case e_lightCondition::CONDITTION1:
         if(CONDITTION1IsTrue(args.at(0).toInt()))return true;

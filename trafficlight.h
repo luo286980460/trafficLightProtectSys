@@ -22,11 +22,11 @@ enum class e_lightExecuteTask{   // 可执行的任务
 };
 
 enum class e_trafficLightColor{  // 红绿灯颜色
-    UNKNOWN,
     RED,
     GREEN,
     YELLOW,
-    BLACK
+    BLACK,
+    UNKNOWN
 };
 
 class TrafficLight : public QObject
