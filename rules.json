@@ -1,0 +1,104 @@
+{
+    "rules": [
+        {
+            "conditionList": [
+                {
+                    "args": [
+                        {
+                            "name": "绿"
+                        }
+                    ],
+                    "condition": 0,
+                    "deviceId": 6,
+                    "deviceType": 0
+                }
+            ],
+            "executeTaskList": [
+                {
+                    "args": [
+                        {
+                            "name": "4.png"
+                        }
+                    ],
+                    "deviceId": 1,
+                    "deviceType": 1,
+                    "executeTask": 0
+                }
+            ],
+            "name": "直行绿灯"
+        },
+        {
+            "conditionList": [
+                {
+                    "args": [
+                        {
+                            "name": "绿"
+                        },
+                        {
+                            "name": ""
+                        }
+                    ],
+                    "condition": 0,
+                    "deviceId": 3,
+                    "deviceType": 0
+                }
+            ],
+            "executeTaskList": [
+                {
+                    "args": [
+                        {
+                            "name": "5.png"
+                        }
+                    ],
+                    "deviceId": 1,
+                    "deviceType": 1,
+                    "executeTask": 0
+                }
+            ],
+            "name": "左转绿灯"
+        },
+        {
+            "conditionList": [
+                {
+                    "args": [
+                        {
+                            "name": "红"
+                        },
+                        {
+                            "name": ""
+                        }
+                    ],
+                    "condition": 0,
+                    "deviceId": 1,
+                    "deviceType": 0
+                },
+                {
+                    "args": [
+                        {
+                            "name": "红"
+                        },
+                        {
+                            "name": ""
+                        }
+                    ],
+                    "condition": 0,
+                    "deviceId": 4,
+                    "deviceType": 0
+                }
+            ],
+            "executeTaskList": [
+                {
+                    "args": [
+                        {
+                            "name": "2.png"
+                        }
+                    ],
+                    "deviceId": 1,
+                    "deviceType": 1,
+                    "executeTask": 0
+                }
+            ],
+            "name": "规则1"
+        }
+    ]
+}

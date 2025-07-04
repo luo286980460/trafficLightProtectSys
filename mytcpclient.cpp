@@ -10,28 +10,28 @@ MyTcpClient::MyTcpClient(QObject *parent)
     m_tcpSocket = new QTcpSocket(this);
     // 连接 readyRead 信号到槽函数
     connect(m_tcpSocket, &QTcpSocket::readyRead, this, &MyTcpClient::readPendingDatagrams);
-    connect(m_tcpSocket, &QTcpSocket::stateChanged, this, [this](QAbstractSocket::SocketState state){
+    connect(m_tcpSocket, &QTcpSocket::stateChanged, this, [](QAbstractSocket::SocketState state){
         switch (state) {
         case QAbstractSocket::UnconnectedState:
-            qDebug() << ("UnconnectedState");
+            qDebug() << ("camera UnconnectedState");
             break;
         case QAbstractSocket::HostLookupState:
-            qDebug() << ("HostLookupState");
+            qDebug() << ("camera HostLookupState");
             break;
         case QAbstractSocket::ConnectingState:
-            qDebug() << ("ConnectingState");
+            qDebug() << ("camera ConnectingState");
             break;
         case QAbstractSocket::ConnectedState:
-            qDebug() << ("ConnectedState");
+            qDebug() << ("camera ConnectedState");
             break;
         case QAbstractSocket::BoundState:
-            qDebug() << ("BoundState");
+            qDebug() << ("camera BoundState");
             break;
         case QAbstractSocket::ListeningState:
-            qDebug() << ("ListeningState");
+            qDebug() << ("camera ListeningState");
             break;
         case QAbstractSocket::ClosingState:
-            qDebug() << ("ClosingState");
+            qDebug() << ("camera ClosingState");
             break;
         default:
             break;
@@ -56,9 +56,7 @@ void MyTcpClient::connectToHost(QString ip, int port)
 
 void MyTcpClient::readPendingDatagrams()
 {
-
     QByteArray utfdata = m_tcpSocket->readAll();
-
     QJsonObject json;
     QJsonArray idArray;
 

@@ -228,10 +228,11 @@ void MyHttpServer::createHttpserver(int port)
         QString body = QString::fromStdString(req->body);
         QString contentType = QString::fromStdString(req->GetHeader("ConTent-Type")).trimmed().replace(" ", "");
 
+        // qDebug() << "**********************: " << body;
+
         if("application/json" != contentType){
             backJson["code"] = 400;
             backJson["msg"] = "非法请求头";
-
 
             resp->content_type = APPLICATION_JSON;
             resp->body = QJsonDocument(backJson).toJson().toStdString();
@@ -329,19 +330,11 @@ void MyHttpServer::createHttpserver(int port)
     /* API handlers */
     // curl -v http://ip:port/ping
     m_router->GET("/ping", [](HttpRequest* req, HttpResponse* resp) {
-        Q_UNUSED(req);
-        Json ex3 =  {
-            {"time", "最后更新时间：2025年06月17日"},
-            {"Name", "信号灯守护神系统(cmd)web"},
-            {"Version", "1.0.1"},
-            {"Msg", "web测试版,"}
-        };
-
         QJsonObject backJson;
-        backJson.insert("time", "最后更新时间：2025年06月17日");
+        backJson.insert("time", "最后更新时间：2025年07月04日");
         backJson.insert("Name", "信号灯守护神系统(cmd)web");
-        backJson.insert("Version", "1.0.1");
-        backJson.insert("Msg", "web测试版(args[]数据结构已修改)");
+        backJson.insert("Version", "1.1.1");
+        backJson.insert("Msg", "修复规则数据结构改变,最后更新时间：2025年07月04日");
 
         resp->content_type = APPLICATION_JSON;
         resp->body = QJsonDocument(backJson).toJson().toStdString();

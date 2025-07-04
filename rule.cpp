@@ -4,6 +4,7 @@
 #include "qjsonarray.h"
 #include "qjsondocument.h"
 #include "qjsonobject.h"
+#include "trafficlight.h"
 
 #include <QCoreApplication>
 #include <QFileInfo>
@@ -32,7 +33,6 @@ void Rule::runRule()
            //qDebug() << m_ruleList.at(i)->name << ":    有条件为假";
         }
     }
-    qDebug() <<"\n *********************** \n";
 }
 
 void Rule::testShowLights()
@@ -114,6 +114,7 @@ void Rule::initScreen()
     Back2DefaultProgram = cfgJson.value("screen").toObject().value("Back2DefaultProgram").toInt();
     m_screen = new NovaController(ip, Back2DefaultProgram);
     m_screenList << m_screen;
+
     m_screen->start();
 }
 
@@ -143,11 +144,19 @@ void Rule::writewRules2RulesFile(QString rulesData)
 
 bool Rule::conittionIsTrue(s_condition condition)
 {
+    TrafficLight* light = nullptr;
     switch (condition.deviceType) {
     case e_deviceType::LIGHT:
-        if(!getLight(condition.deviceId)->conitionIsTrue((e_lightCondition)(condition.condition), condition.args)){
+        light = getLight(condition.deviceId);
+        if(!light){
+            qDebug() << "lightID: " << condition.deviceId << "不存在";
             return false;
         }
+
+        if(!light->conitionIsTrue((e_lightCondition)(condition.condition), condition.args)){
+            return false;
+        }
+
         break;
     case e_deviceType::SCREEN:
         qCritical() << "****** 屏幕未添加条件判断 ******";
@@ -210,6 +219,7 @@ bool Rule::allexecuteTaskIsDone(QList<s_executeTask>* executeTaskList)
 
 bool Rule::modifyLightColorById(int id, e_trafficLightColor color)
 {
+
     for(int i=0; i<m_trafficLightList.size(); i++){
         if(id == m_trafficLightList.at(i)->getId()){
             m_trafficLightList.at(i)->setLightColor(color);
@@ -274,17 +284,22 @@ void Rule::setRules(QString ruleData)
     QJsonObject rulesJsonObj = rulesJsonDoc.object();
 
     foreach (QJsonValue ruleValue, rulesJsonObj.value("rules").toArray()) {
+        qDebug() << "/***********************************************/";
         QJsonObject ruleJson = ruleValue.toObject();
 
         s_rule* rule = new s_rule;
         rule->name = ruleJson.value("name").toString();
+        qDebug() << "规则: " << rule->name;
         m_ruleList << rule;
 
         QJsonArray conditionsArray = ruleJson.value("conditionList").toArray();
         foreach (QJsonValue conditionValue, conditionsArray){
+
+            qDebug() << "**条件: ";
             QJsonObject conditionJson = conditionValue.toObject();
             s_condition condition;
             QJsonArray args = conditionJson.value("args").toArray();
+            qDebug() << conditionJson;
 
             condition.deviceType = (e_deviceType)conditionJson.value("deviceType").toInt();
             condition.deviceId = conditionJson.value("deviceId").toInt();
@@ -294,13 +309,22 @@ void Rule::setRules(QString ruleData)
                 condition.args << value.toObject().value("name").toString();
             }
             rule->conditionList << condition;
+
+            qDebug() << "****设备类型: " << (int)condition.deviceType;
+            qDebug() << "****设备编号: " << (int)condition.deviceId;
+            qDebug() << "****满足条件: " << (int)condition.condition;
+            qDebug() << "****参数列表: " << condition.args;
         }
 
         QJsonArray executeArray = ruleJson.value("executeTaskList").toArray();
         foreach (QJsonValue executeTaskValue, executeArray){
+
+            qDebug() << "**执行: ";
             QJsonObject executeTaskJson = executeTaskValue.toObject();
             s_executeTask executeTask;
             QJsonArray args = executeTaskJson.value("args").toArray();
+
+            qDebug() << executeTaskJson;
 
             executeTask.deviceType = (e_deviceType)executeTaskJson.value("deviceType").toInt();
             executeTask.deviceId = executeTaskJson.value("deviceId").toInt();
@@ -310,6 +334,10 @@ void Rule::setRules(QString ruleData)
                 executeTask.args << value.toObject().value("name").toString();
             }
             rule->executeTaskList << executeTask;
+            qDebug() << "****设备类型: " << (int)executeTask.deviceType;
+            qDebug() << "****设备编号: " << (int)executeTask.deviceId;
+            qDebug() << "****满足条件: " << (int)executeTask.executeTask;
+            qDebug() << "****参数列表: " << executeTask.args;
         }
     }
 }
@@ -369,7 +397,6 @@ void Rule::slotUpdateLightsInfoDataParse(QString data)
             addLight2List(id, color);
         }
     }
-
     // testShowLights();
 }
 

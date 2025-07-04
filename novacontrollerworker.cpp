@@ -84,6 +84,7 @@ void NovaControllerWorker::PlayProgramDefaultTxtAndPic()
 void NovaControllerWorker::slotInit()
 {
     m_traffic = new NovaTraffic(m_ip.toLocal8Bit(), m_port);
+    qDebug() << m_ip << " : " << m_port;
 
     // 播放节目1 默认节目
     PlayProgramDefault();

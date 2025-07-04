@@ -7,6 +7,7 @@
 #include <QFileInfo>
 #include <QJsonDocument>
 #include <QProcess>
+#include <QDebug>
 
 #define CFG_JSON        "/cfg.json"
 
@@ -31,7 +32,7 @@ bool MainClass::initCfgJson()
     QString iniPath = QCoreApplication::applicationDirPath() + CFG_JSON;
 
     if(!QFileInfo::exists(iniPath)){
-        qCritical() << ("****** cfg.json 配置文件丢失 ******");
+        qCritical() << ("****** cfg.json 配置文件丢失1111  ****** ") << iniPath;
         return false;
     }
 
@@ -79,6 +80,7 @@ bool MainClass::initHttpserver()
 bool MainClass::initTcpClient()
 {
     m_myTcpclient = new MyTcpClient();
+
     connect(m_myTcpclient, &MyTcpClient::signalUpdateLightsInfoDataParse, this, &MainClass::signalUpdateLightsInfoDataParse);
     m_myTcpclient->connectToHost(m_cfgJson.value("camera").toObject().value("ip").toString(),
                                  m_cfgJson.value("camera").toObject().value("port").toInt());
