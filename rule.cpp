@@ -231,6 +231,7 @@ bool Rule::modifyLightColorById(int id, e_trafficLightColor color)
 
 e_trafficLightColor Rule::colorString2Enum(QString color)
 {
+
     if(color.toUpper() == "RED"){
         return e_trafficLightColor::RED;
     }else if(color.toUpper() == "GREEN"){
@@ -305,9 +306,21 @@ void Rule::setRules(QString ruleData)
             condition.deviceId = conditionJson.value("deviceId").toInt();
             condition.condition = conditionJson.value("condition").toInt();
 
-            foreach (QJsonValue value, args) {
-                condition.args << value.toObject().value("name").toString();
+            if(condition.deviceType == e_deviceType::LIGHT){                    // light 参数
+                if(condition.condition == (int)e_lightCondition::CONDITTION0){  // light 的 CONDITTION0 参数
+                    qDebug() << "**条件:  " << args;
+                    foreach (QJsonValue value, args) {
+                        condition.args << QString::number(value.toObject().value("name").toInt());
+                    }
+                }else if(condition.condition == (int)e_lightCondition::CONDITTION1){  // light 的 CONDITTION1 参数
+                    foreach (QJsonValue value, args) {
+                        condition.args << QString::number(value.toObject().value("name").toInt());
+                    }
+                }
+            }else if(condition.deviceType == e_deviceType::SCREEN){
+
             }
+
             rule->conditionList << condition;
 
             qDebug() << "****设备类型: " << (int)condition.deviceType;

@@ -37,19 +37,19 @@ bool TrafficLight::conitionIsTrue(e_lightCondition condition, QStringList args)
     switch (condition) {
     case e_lightCondition::CONDITTION0:
 
-        colorStr = args.at(0).trimmed();
-        e_trafficLightColor color;
-        if(colorStr == "红"){
-            color = e_trafficLightColor::RED;
-        }else if(colorStr == "绿"){
-            color = e_trafficLightColor::GREEN;
-        }else if(colorStr == "黄"){
-            color = e_trafficLightColor::YELLOW;
-        }else{
-            color = e_trafficLightColor::BLACK;
-        }
+        // colorStr = args.at(0).trimmed();
+        // e_trafficLightColor color;
+        // if(colorStr == "红"){
+        //     color = e_trafficLightColor::RED;
+        // }else if(colorStr == "绿"){
+        //     color = e_trafficLightColor::GREEN;
+        // }else if(colorStr == "黄"){
+        //     color = e_trafficLightColor::YELLOW;
+        // }else{
+        //     color = e_trafficLightColor::BLACK;
+        // }
 
-        if(CONDITTION0IsTrue(color))return true;
+        if(CONDITTION0IsTrue((e_trafficLightColor)(args.at(0).toInt())))return true;
         break;
     case e_lightCondition::CONDITTION1:
         if(CONDITTION1IsTrue(args.at(0).toInt()))return true;
@@ -79,6 +79,7 @@ bool TrafficLight::CONDITTION0IsTrue(e_trafficLightColor color)
 
 bool TrafficLight::CONDITTION1IsTrue(int sec)
 {
+    qDebug() << "m_lightSec: " << m_lightSec/10 << "   sec: " << sec;
     if(m_lightSec/10 >= sec){
         return true;
     }

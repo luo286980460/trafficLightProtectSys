@@ -333,8 +333,8 @@ void MyHttpServer::createHttpserver(int port)
         QJsonObject backJson;
         backJson.insert("time", "最后更新时间：2025年07月04日");
         backJson.insert("Name", "信号灯守护神系统(cmd)web");
-        backJson.insert("Version", "1.1.2");
-        backJson.insert("Msg", "修复了修改界面,web前端传颜色数据错误造成的问题");
+        backJson.insert("Version", "1.2.0");
+        backJson.insert("Msg", "修复了修改界面,web前端发送的多个其他数据类型错误造成的多个bug");
 
         resp->content_type = APPLICATION_JSON;
         resp->body = QJsonDocument(backJson).toJson().toStdString();

@@ -4,10 +4,10 @@
 #include <QObject>
 
 enum class e_lightCondition{   // 条件列表
-    CONDITTION0,        // 灯为红色时
-    CONDITTION1,        // 灯为绿色时
-    CONDITTION2,        // 灯为黄色时
-    CONDITTION3,        // 灯亮的时间 >= 多少s
+    CONDITTION0,        // 判断灯颜色
+    CONDITTION1,        // 灯亮的时间 >= 多少s
+    CONDITTION2,
+    CONDITTION3,
     CONDITTION4,
     CONDITTION5,
 };

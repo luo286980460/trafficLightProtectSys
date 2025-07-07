@@ -100,5 +100,7 @@ void MyTcpClient::readPendingDatagrams()
 
     json.insert("trafficlight_status", idArray);
 
+    // qDebug() << json;
+
     emit signalUpdateLightsInfoDataParse(QJsonDocument(json).toJson());
 }
